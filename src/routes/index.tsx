@@ -21,7 +21,7 @@ import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 // ─────────────────────────────────────────────────────────────────────────────
 // 👇 TROQUE AQUI quando tiver a URL de checkout da Cakto
 // ─────────────────────────────────────────────────────────────────────────────
-const CAKTO_URL = "https://pay.cakto.com.br/SEU-PRODUTO-AQUI";
+const CAKTO_URL = "https://pay.cakto.com.br/4zjc4ku_986033";
 
 export const Route = createFileRoute("/")({
   head: () => ({
