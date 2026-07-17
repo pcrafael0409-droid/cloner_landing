@@ -16,6 +16,7 @@ import {
   Users,
 } from "lucide-react";
 import { useState, useEffect } from "react";
+import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 👇 TROQUE AQUI quando tiver a URL de checkout da Cakto
@@ -51,7 +52,6 @@ function LandingPage() {
       }}
     >
       <UrgencyTicker />
-      <Nav />
       <main>
         <Hero />
         <SocialProof />
@@ -111,78 +111,6 @@ function UrgencyTicker() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// NAV
-// ─────────────────────────────────────────────────────────────────────────────
-
-function Nav() {
-  return (
-    <header
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "16px 24px",
-        maxWidth: "1100px",
-        margin: "0 auto",
-      }}
-    >
-      {/* Logo */}
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <div
-          style={{
-            width: "36px",
-            height: "36px",
-            borderRadius: "10px",
-            background: "oklch(0.57 0.26 22)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 0 20px oklch(0.57 0.26 22 / 0.6)",
-          }}
-        >
-          <Eye size={18} color="white" />
-        </div>
-        <span
-          style={{
-            fontFamily: "'Sora', system-ui, sans-serif",
-            fontWeight: 700,
-            fontSize: "20px",
-            letterSpacing: "-0.03em",
-          }}
-        >
-          Espião
-        </span>
-      </div>
-
-      {/* CTA Button */}
-      <a
-        href={CAKTO_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "6px",
-          background: "oklch(0.57 0.26 22)",
-          color: "white",
-          padding: "10px 20px",
-          borderRadius: "8px",
-          fontSize: "14px",
-          fontWeight: 600,
-          textDecoration: "none",
-          boxShadow: "0 0 20px oklch(0.57 0.26 22 / 0.5)",
-          transition: "opacity 0.2s",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
-        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-      >
-        Quero Descobrir Agora <ArrowRight size={14} />
-      </a>
-    </header>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // HERO
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -190,194 +118,364 @@ function Hero() {
   return (
     <section
       style={{
-        textAlign: "center",
-        padding: "60px 24px 80px",
+        width: "100%",
+        minHeight: "750px",
         position: "relative",
+        display: "flex",
+        alignItems: "center",
         overflow: "hidden",
+        padding: "80px 24px",
       }}
     >
-      {/* Background radial glow */}
+      {/* Background Image of Couple */}
       <div
         style={{
           position: "absolute",
           top: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "800px",
-          height: "500px",
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: "url(/couple-bg.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "center right",
+          zIndex: 0,
+        }}
+      />
+      {/* Dark gradient overlay for text readability */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 0%, oklch(0.57 0.26 22 / 0.22), transparent 70%)",
-          pointerEvents: "none",
+            "linear-gradient(to right, #050505 30%, transparent 90%), linear-gradient(to top, #050505 5%, transparent 40%)",
+          zIndex: 1,
         }}
       />
 
-      <div style={{ position: "relative", maxWidth: "800px", margin: "0 auto" }}>
-        {/* Eye icon */}
-        <div className="eye-neon" style={{ marginBottom: "24px", display: "inline-block" }}>
-          <Eye
-            size={64}
-            color="oklch(0.57 0.26 22)"
-            strokeWidth={1.5}
-          />
-        </div>
-
-        {/* Badge */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "6px",
-            background: "oklch(0.57 0.26 22 / 0.15)",
-            border: "1px solid oklch(0.57 0.26 22 / 0.4)",
-            borderRadius: "999px",
-            padding: "6px 14px",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "oklch(0.80 0.15 22)",
-            marginBottom: "20px",
-            letterSpacing: "0.05em",
-            textTransform: "uppercase",
-          }}
-        >
-          <span
+      <div
+        style={{
+          position: "relative",
+          zIndex: 2,
+          maxWidth: "1100px",
+          margin: "0 auto",
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "40px",
+          flexWrap: "wrap",
+        }}
+      >
+        {/* Left Column: Text & CTA */}
+        <div style={{ flex: "1 1 450px", maxWidth: "600px", textAlign: "left" }}>
+          <div
             style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              background: "oklch(0.57 0.26 22)",
-              boxShadow: "0 0 8px oklch(0.57 0.26 22)",
-              display: "inline-block",
-            }}
-          />
-          Monitoramento 100% Anônimo
-        </div>
-
-        {/* Headline */}
-        <h1
-          style={{
-            fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: "clamp(2.2rem, 6vw, 4rem)",
-            fontWeight: 800,
-            lineHeight: 1.1,
-            letterSpacing: "-0.03em",
-            marginBottom: "20px",
-          }}
-        >
-          Ele está te{" "}
-          <span
-            style={{
-              color: "oklch(0.57 0.26 22)",
-              textShadow: "0 0 30px oklch(0.57 0.26 22 / 0.5)",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "8px",
+              background: "oklch(0.57 0.26 22 / 0.15)",
+              border: "1px solid oklch(0.57 0.26 22 / 0.4)",
+              borderRadius: "999px",
+              padding: "6px 14px",
+              fontSize: "12px",
+              fontWeight: 600,
+              color: "oklch(0.80 0.15 22)",
+              marginBottom: "24px",
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
             }}
           >
-            traindo?
-          </span>
-        </h1>
-
-        {/* Sub-headline */}
-        <p
-          style={{
-            fontSize: "clamp(1rem, 2.5vw, 1.2rem)",
-            color: "oklch(0.72 0.03 30)",
-            lineHeight: 1.65,
-            marginBottom: "36px",
-            maxWidth: "580px",
-            margin: "0 auto 36px",
-          }}
-        >
-          Descubra toda a verdade no WhatsApp e Instagram do seu parceiro —{" "}
-          <strong style={{ color: "oklch(0.97 0.005 30)" }}>
-            sem que ele perceba, sem deixar rastros.
-          </strong>
-        </p>
-
-        {/* CTA */}
-        <a
-          href={CAKTO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "10px",
-            background: "oklch(0.57 0.26 22)",
-            color: "white",
-            padding: "18px 40px",
-            borderRadius: "12px",
-            fontSize: "17px",
-            fontWeight: 700,
-            textDecoration: "none",
-            boxShadow:
-              "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)",
-            transition: "transform 0.2s, box-shadow 0.2s",
-            marginBottom: "20px",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "translateY(-2px)";
-            e.currentTarget.style.boxShadow =
-              "0 0 60px oklch(0.57 0.26 22 / 0.7), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.5)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.boxShadow =
-              "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)";
-          }}
-        >
-          🔍 Descobrir Agora — Acesso Imediato
-          <ArrowRight size={18} />
-        </a>
-
-        {/* Trust badges */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "16px",
-            fontSize: "13px",
-            color: "oklch(0.60 0.03 30)",
-            marginTop: "8px",
-          }}
-        >
-          {[
-            { icon: <ShieldCheck size={14} />, text: "100% anônimo" },
-            { icon: <Lock size={14} />, text: "Sem deixar rastros" },
-            { icon: <Zap size={14} />, text: "Acesso instantâneo" },
-            { icon: <CheckCircle2 size={14} />, text: "Garantia de 7 dias" },
-          ].map((b) => (
             <span
-              key={b.text}
               style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "5px",
-                color: "oklch(0.70 0.04 22)",
+                width: "6px",
+                height: "6px",
+                borderRadius: "50%",
+                background: "oklch(0.57 0.26 22)",
+                boxShadow: "0 0 8px oklch(0.57 0.26 22)",
+              }}
+            />
+            Monitoramento 100% Anônimo
+          </div>
+
+          <h1
+            style={{
+              fontFamily: "'Sora', system-ui, sans-serif",
+              fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
+              fontWeight: 800,
+              lineHeight: 1.1,
+              letterSpacing: "-0.03em",
+              marginBottom: "20px",
+            }}
+          >
+            Ele está te{" "}
+            <span
+              style={{
+                color: "oklch(0.57 0.26 22)",
+                textShadow: "0 0 40px oklch(0.57 0.26 22 / 0.5)",
               }}
             >
-              {b.icon} {b.text}
+              traindo?
             </span>
-          ))}
+          </h1>
+
+          <p
+            style={{
+              fontSize: "clamp(1.1rem, 2.5vw, 1.3rem)",
+              color: "oklch(0.72 0.03 30)",
+              lineHeight: 1.6,
+              marginBottom: "40px",
+              maxWidth: "520px",
+            }}
+          >
+            Descubra toda a verdade no WhatsApp e Instagram do seu parceiro —{" "}
+            <strong style={{ color: "oklch(0.97 0.005 30)" }}>
+              antes que seja tarde demais.
+            </strong>
+          </p>
+
+          <a
+            href={CAKTO_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "10px",
+              background: "oklch(0.57 0.26 22)",
+              color: "white",
+              padding: "18px 40px",
+              borderRadius: "12px",
+              fontSize: "17px",
+              fontWeight: 700,
+              textDecoration: "none",
+              boxShadow:
+                "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)",
+              transition: "transform 0.2s, box-shadow 0.2s",
+              marginBottom: "24px",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.boxShadow =
+                "0 0 60px oklch(0.57 0.26 22 / 0.7), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.5)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow =
+                "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)";
+            }}
+          >
+            🔍 Descobrir Agora — Acesso Imediato
+            <ArrowRight size={18} />
+          </a>
+
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "20px",
+              fontSize: "13px",
+              color: "oklch(0.60 0.03 30)",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <ShieldCheck size={14} color="oklch(0.57 0.26 22)" /> 100% discreto
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <Lock size={14} color="oklch(0.57 0.26 22)" /> Sem ele perceber
+            </div>
+          </div>
         </div>
 
-        {/* Urgency note */}
+        {/* Right Column: Phone Mockup */}
         <div
           style={{
-            marginTop: "28px",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            background: "oklch(0.57 0.26 22 / 0.10)",
-            border: "1px solid oklch(0.57 0.26 22 / 0.3)",
-            borderRadius: "8px",
-            padding: "10px 18px",
-            fontSize: "13px",
-            color: "oklch(0.80 0.12 22)",
+            flex: "1 1 300px",
+            display: "flex",
+            justifyContent: "center",
+            perspective: "1200px",
           }}
         >
-          <AlertTriangle size={14} />
-          <span>
-            <strong>47 vagas restantes</strong> com preço de lançamento — oferta encerra hoje
-          </span>
+          <div
+            style={{
+              width: "280px",
+              height: "560px",
+              background: "#090909",
+              borderRadius: "44px",
+              border: "5px solid #222",
+              boxShadow:
+                "0 0 60px oklch(0.57 0.26 22 / 0.4), inset 0 0 20px rgba(0,0,0,0.8), inset 0 0 4px rgba(255,255,255,0.2)",
+              position: "relative",
+              padding: "20px 16px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "16px",
+              transform: "rotateY(-15deg) rotateX(5deg)",
+              transformStyle: "preserve-3d",
+              overflow: "hidden",
+            }}
+          >
+            {/* Screen Glare */}
+            <div
+              style={{
+                position: "absolute",
+                top: "-50%",
+                left: "-50%",
+                width: "200%",
+                height: "200%",
+                background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 100%)",
+                transform: "rotate(25deg)",
+                pointerEvents: "none",
+                zIndex: 20,
+              }}
+            />
+
+            {/* Dynamic Island Notch */}
+            <div
+              style={{
+                position: "absolute",
+                top: "14px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "90px",
+                height: "24px",
+                background: "#000",
+                borderRadius: "12px",
+                zIndex: 10,
+                boxShadow: "inset 0 0 4px rgba(255,255,255,0.1)",
+              }}
+            />
+
+            {/* Glowing Red Eye background inside phone */}
+            <div
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                opacity: 0.25,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                filter: "drop-shadow(0 0 20px oklch(0.57 0.26 22))",
+              }}
+            >
+              <Eye size={120} color="oklch(0.57 0.26 22)" strokeWidth={1} />
+            </div>
+
+            {/* WhatsApp Notification */}
+            <div
+              style={{
+                background: "rgba(30, 30, 30, 0.75)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                borderRadius: "20px",
+                padding: "16px",
+                display: "flex",
+                gap: "12px",
+                alignItems: "flex-start",
+                marginTop: "48px",
+                position: "relative",
+                zIndex: 10,
+                boxShadow: "0 15px 35px rgba(0,0,0,0.6)",
+                transform: "translateZ(30px)",
+              }}
+            >
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  background: "#25D366",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  boxShadow: "0 4px 10px rgba(37, 211, 102, 0.4)",
+                }}
+              >
+                <WhatsappLogo size={22} weight="fill" color="white" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "12px",
+                    color: "#aaa",
+                    marginBottom: "4px",
+                  }}
+                >
+                  <span>WhatsApp</span>
+                  <span>agora</span>
+                </div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "2px" }}>
+                  Amor ❤️
+                </div>
+                <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
+                  Pode vir, ela já dormiu...
+                </div>
+              </div>
+            </div>
+
+            {/* Instagram Notification */}
+            <div
+              style={{
+                background: "rgba(30, 30, 30, 0.75)",
+                backdropFilter: "blur(20px)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                borderRadius: "20px",
+                padding: "16px",
+                display: "flex",
+                gap: "12px",
+                alignItems: "flex-start",
+                position: "relative",
+                zIndex: 10,
+                boxShadow: "0 15px 35px rgba(0,0,0,0.6)",
+                transform: "translateZ(40px)",
+              }}
+            >
+              <div
+                style={{
+                  width: "36px",
+                  height: "36px",
+                  background:
+                    "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
+                  borderRadius: "10px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  boxShadow: "0 4px 10px rgba(220, 39, 67, 0.4)",
+                }}
+              >
+                <InstagramLogo size={22} weight="regular" color="white" />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "12px",
+                    color: "#aaa",
+                    marginBottom: "4px",
+                  }}
+                >
+                  <span>Instagram</span>
+                  <span>2 min</span>
+                </div>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "2px" }}>
+                  @joice_silva
+                </div>
+                <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
+                  Você vem me ver hoje à noite? 🔥
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -974,7 +1072,7 @@ function UrgencyBanner() {
         <p style={{ color: "oklch(0.72 0.03 30)", fontSize: "15px", marginBottom: "24px" }}>
           <strong style={{ color: "white" }}>Restam apenas 47 vagas</strong> com o preço especial de lançamento.
           <br />
-          Quando esgotar, o preço sobe para R$247.
+          Quando esgotar, o preço volta ao normal.
         </p>
 
         <a
@@ -1013,7 +1111,7 @@ function Pricing() {
     "Histórico de localização em tempo real",
     "Fotos e vídeos trocados",
     "Registro de chamadas e ligações",
-    "Acesso por 30 dias",
+    "✨ Acesso VITALÍCIO — pague uma vez, use para sempre",
     "Suporte via WhatsApp",
     "Garantia de 7 dias ou seu dinheiro de volta",
   ];
@@ -1079,7 +1177,7 @@ function Pricing() {
 
           <div style={{ textAlign: "center", marginBottom: "28px" }}>
             <div style={{ fontSize: "14px", color: "oklch(0.55 0.03 30)", marginBottom: "4px" }}>
-              Acesso Completo por 30 dias
+              ♾️ Acesso Vitalício — Pague uma vez, use para sempre
             </div>
             <div
               style={{
@@ -1096,7 +1194,7 @@ function Pricing() {
                   textDecoration: "line-through",
                 }}
               >
-                R$247
+                R$97
               </span>
               <span
                 style={{
@@ -1107,7 +1205,7 @@ function Pricing() {
                   lineHeight: 1,
                 }}
               >
-                R$97
+                R$29,90
               </span>
             </div>
             <div
@@ -1122,7 +1220,7 @@ function Pricing() {
                 marginTop: "8px",
               }}
             >
-              −61% DE DESCONTO
+              −70% DE DESCONTO
             </div>
           </div>
 
@@ -1161,7 +1259,7 @@ function Pricing() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            🔍 Quero Descobrir a Verdade — R$97 <ArrowRight size={16} />
+            🔍 Quero Descobrir a Verdade — R$29,90 <ArrowRight size={16} />
           </a>
 
           <div style={{ textAlign: "center" }}>
@@ -1433,7 +1531,7 @@ function FinalCTA() {
               marginBottom: "16px",
             }}
           >
-            🔍 Descobrir Agora por R$97 <ArrowRight size={18} />
+            🔍 Descobrir Agora por R$29,90 <ArrowRight size={18} />
           </a>
 
           <div style={{ fontSize: "13px", color: "oklch(0.50 0.02 30)" }}>
