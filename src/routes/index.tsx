@@ -507,6 +507,7 @@ function SocialProof() {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
           gap: "16px",
+          marginBottom: "24px",
         }}
       >
         {stats.map((s) => (
@@ -536,6 +537,54 @@ function SocialProof() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* DADO ESTATÍSTICO DE IMPACTO */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, oklch(0.57 0.26 22 / 0.15), oklch(0.12 0.02 20))",
+          border: "1px solid oklch(0.57 0.26 22 / 0.35)",
+          borderRadius: "16px",
+          padding: "24px clamp(16px, 4vw, 32px)",
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          gap: "20px",
+          boxShadow: "0 10px 30px -10px oklch(0.57 0.26 22 / 0.2)",
+          flexWrap: "wrap",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Sora', system-ui, sans-serif",
+            fontSize: "clamp(2rem, 5vw, 3rem)",
+            fontWeight: 800,
+            color: "oklch(0.57 0.26 22)",
+            textShadow: "0 0 25px oklch(0.57 0.26 22 / 0.5)",
+            lineHeight: 1,
+            flexShrink: 0,
+            margin: "0 auto",
+          }}
+        >
+          +70%
+        </div>
+        <div style={{ flex: "1 1 240px", textAlign: "left" }}>
+          <div
+            style={{
+              fontFamily: "'Sora', system-ui, sans-serif",
+              fontSize: "clamp(15px, 2.5vw, 17px)",
+              fontWeight: 700,
+              color: "oklch(0.97 0.005 30)",
+              marginBottom: "4px",
+              lineHeight: 1.3,
+            }}
+          >
+            Estudos revelam: mais de 70% das mulheres já conversaram em segredo com outro homem estando em um relacionamento.
+          </div>
+          <div style={{ fontSize: "13px", color: "oklch(0.65 0.03 30)", lineHeight: 1.4 }}>
+            A maioria esconde conversas no WhatsApp e DMs do Instagram. Não viva na dúvida.
+          </div>
+        </div>
       </div>
     </section>
   );
