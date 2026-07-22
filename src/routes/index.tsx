@@ -14,6 +14,11 @@ import {
   Smartphone,
   Zap,
   Users,
+  Check,
+  X,
+  ChevronRight,
+  Activity,
+  Search,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
