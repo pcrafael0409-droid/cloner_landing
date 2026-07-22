@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { sql } from "@vercel/postgres";
 import {
   Eye,
   ShieldCheck,
@@ -16,9 +14,7 @@ import {
   Smartphone,
   Zap,
   Users,
-  BarChart3,
   Check,
-  RefreshCw,
   X,
   ChevronRight,
   Activity,
@@ -31,109 +27,6 @@ import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 // 👇 URL de checkout
 // ─────────────────────────────────────────────────────────────────────────────
 const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
-
-// Server function for automatic Vercel Postgres recording
-const trackDatabaseEventFn = createServerFn({ method: "POST" })
-  .validator((data: { step: string; target?: string }) => data)
-  .handler(async ({ data }) => {
-    try {
-      if (process.env.POSTGRES_URL) {
-        await sql`
-          CREATE TABLE IF NOT EXISTS funnel_events (
-            id SERIAL PRIMARY KEY,
-            step_name VARCHAR(100) NOT NULL,
-            target_input VARCHAR(255),
-            created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-          );
-        `;
-        await sql`
-          INSERT INTO funnel_events (step_name, target_input)
-          VALUES (${data.step}, ${data.target || null});
-        `;
-      }
-      return { success: true };
-    } catch (err) {
-      console.error("Vercel Postgres insert error:", err);
-      return { success: false };
-    }
-  });
-
-// ─────────────────────────────────────────────────────────────────────────────
-// FUNNEL TRACKING SYSTEM (Local Storage & Database Dispatcher)
-// ─────────────────────────────────────────────────────────────────────────────
-type FunnelStep =
-  | "quiz_step_1"
-  | "quiz_step_2"
-  | "quiz_step_3"
-  | "quiz_step_4"
-  | "analyzing"
-  | "landing_page"
-  | "checkout_click";
-
-function trackFunnelEvent(step: FunnelStep, extraData?: Record<string, any>) {
-  if (typeof window === "undefined") return;
-
-  try {
-    // Save to LocalStorage stats counter for live dashboard
-    const storageKey = "esplao_funnel_metrics_v1";
-    const raw = localStorage.getItem(storageKey);
-    const data = raw
-      ? JSON.parse(raw)
-      : {
-          quiz_step_1: 0,
-          quiz_step_2: 0,
-          quiz_step_3: 0,
-          quiz_step_4: 0,
-          analyzing: 0,
-          landing_page: 0,
-          checkout_click: 0,
-          history: [],
-        };
-
-    data[step] = (data[step] || 0) + 1;
-    data.history.push({
-      step,
-      timestamp: new Date().toISOString(),
-      extraData: extraData || null,
-    });
-
-    // Keep history clean (last 100 events)
-    if (data.history.length > 100) {
-      data.history = data.history.slice(-100);
-    }
-
-    localStorage.setItem(storageKey, JSON.stringify(data));
-
-    // Send to Vercel Postgres DB automatically in background
-    trackDatabaseEventFn({ data: { step, target: extraData?.target } }).catch(() => {});
-
-    // Optional: Dispatch to window analytics if Google Analytics or Pixel exists
-    if ((window as any).gtag) {
-      (window as any).gtag("event", step, {
-        event_category: "quiz_funnel",
-        ...extraData,
-      });
-    }
-  } catch (err) {
-    console.error("Tracking error:", err);
-  }
-}
-
-function getFunnelMetrics() {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem("esplao_funnel_metrics_v1");
-    if (!raw) return null;
-    return JSON.parse(raw);
-  } catch (e) {
-    return null;
-  }
-}
-
-function clearFunnelMetrics() {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem("esplao_funnel_metrics_v1");
-}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -157,28 +50,16 @@ function LandingPage() {
   const [currentStep, setCurrentStep] = useState<"quiz" | "analyzing" | "landing">("quiz");
   const [targetInput, setTargetInput] = useState("");
   const [answers, setAnswers] = useState<Record<number, any>>({});
-  const [showMetricsModal, setShowMetricsModal] = useState(false);
-
-  useEffect(() => {
-    // Initial tracking event when landing
-    trackFunnelEvent("quiz_step_1");
-  }, []);
 
   const handleQuizComplete = (target: string, userAnswers: Record<number, any>) => {
     setTargetInput(target);
     setAnswers(userAnswers);
     setCurrentStep("analyzing");
-    trackFunnelEvent("analyzing", { target });
   };
 
   const handleAnalysisFinish = () => {
     setCurrentStep("landing");
-    trackFunnelEvent("landing_page");
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleCheckoutClick = () => {
-    trackFunnelEvent("checkout_click");
   };
 
   return (
@@ -190,38 +71,6 @@ function LandingPage() {
         fontFamily: "'Inter', system-ui, sans-serif",
       }}
     >
-      {/* Botão flutuante discreto para ver Métricas do Funil (Admin / Dono do site) */}
-      <button
-        onClick={() => setShowMetricsModal(true)}
-        title="Ver Métricas de Conversão & Abandono"
-        style={{
-          position: "fixed",
-          bottom: "16px",
-          right: "16px",
-          zIndex: 9999,
-          background: "rgba(20, 20, 20, 0.85)",
-          border: "1px solid oklch(0.57 0.26 22 / 0.4)",
-          color: "oklch(0.85 0.12 22)",
-          borderRadius: "999px",
-          padding: "8px 14px",
-          fontSize: "12px",
-          fontWeight: 600,
-          display: "flex",
-          alignItems: "center",
-          gap: "6px",
-          backdropFilter: "blur(10px)",
-          cursor: "pointer",
-          boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
-        }}
-      >
-        <BarChart3 size={14} color="oklch(0.57 0.26 22)" />
-        Métricas do Funil
-      </button>
-
-      {showMetricsModal && (
-        <MetricsModal onClose={() => setShowMetricsModal(false)} />
-      )}
-
       {currentStep === "quiz" && (
         <QuizFunnel onComplete={handleQuizComplete} />
       )}
@@ -253,17 +102,12 @@ function LandingPage() {
               <span style={{ textDecoration: "underline", textTransform: "uppercase" }}>
                 {targetInput || "PERFIL SELECIONADO"}
               </span>
-              {" "}— 89% de probabilidade de conversas ocultas. Acesso liberado abaixo!
+              {" "}— 97% de probabilidade de conversas ocultas. Acesso liberado abaixo!
             </span>
           </div>
 
           <UrgencyTicker />
-          <main onClick={(e) => {
-            const targetEl = e.target as HTMLElement;
-            if (targetEl.closest(`a[href="${CHECKOUT_URL}"]`)) {
-              handleCheckoutClick();
-            }
-          }}>
+          <main>
             <Hero />
             <SocialProof />
             <HowItWorks />
@@ -432,8 +276,7 @@ function QuizFunnel({
             marginBottom: "20px",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <Eye size={22} color="oklch(0.57 0.26 22)" />
+          <div style={{ display: "flex", alignItems: "center" }}>
             <span
               style={{
                 fontFamily: "'Sora', system-ui, sans-serif",
@@ -843,10 +686,10 @@ function AnalyzingScreen({
 
   useEffect(() => {
     const logs = [
-      { p: 15, msg: "🛰️ Conectando aos servidores de varredura segura..." },
-      { p: 40, msg: `📱 Localizando registros de WhatsApp para ${target}...` },
-      { p: 70, msg: "📸 Analisando DMs secretas e conversas recentes no Instagram..." },
-      { p: 90, msg: "⚠️ ALERTA: 3 conversas com alto grau de suspeita detectadas!" },
+      { p: 12, msg: "🛰️ Conectando aos servidores de varredura segura..." },
+      { p: 35, msg: `📱 Localizando registros de WhatsApp para ${target}...` },
+      { p: 65, msg: "📸 Analisando DMs secretas e conversas recentes no Instagram..." },
+      { p: 88, msg: "⚠️ ALERTA: 97% de probabilidade de conversas ocultas detectadas!" },
       { p: 100, msg: "✅ Relatório gerado com sucesso! Carregando resultados..." },
     ];
 
@@ -858,7 +701,7 @@ function AnalyzingScreen({
         clearInterval(interval);
         setTimeout(() => {
           onFinish();
-        }, 800);
+        }, 1000);
       }
 
       setProgress(current);
@@ -867,7 +710,7 @@ function AnalyzingScreen({
       if (matchingLog) {
         setStatusLog(matchingLog.msg);
       }
-    }, 80);
+    }, 140);
 
     return () => clearInterval(interval);
   }, [target, onFinish]);
@@ -2742,13 +2585,13 @@ function Footer() {
         }}
       >
         {/* Logo */}
-        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-          <Eye size={16} color="oklch(0.57 0.26 22)" />
+        <div style={{ display: "flex", alignItems: "center" }}>
           <span
             style={{
               fontFamily: "'Sora', system-ui, sans-serif",
-              fontWeight: 700,
-              fontSize: "15px",
+              fontWeight: 900,
+              fontSize: "20px",
+              letterSpacing: "-0.02em",
             }}
           >
             Clone<span style={{ color: "oklch(0.57 0.26 22)" }}>X</span>
