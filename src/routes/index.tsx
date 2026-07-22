@@ -24,9 +24,9 @@ import { useState, useEffect } from "react";
 import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 👇 URL de checkout
+// 👇 URL de checkout do Mercado Pago
 // ─────────────────────────────────────────────────────────────────────────────
-const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
+const CHECKOUT_URL = "SEU_LINK_DO_MERCADO_PAGO_AQUI";
 
 export const Route = createFileRoute("/")({
   head: () => ({

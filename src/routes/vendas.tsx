@@ -12,8 +12,8 @@ export const Route = createFileRoute("/vendas")({
   component: VendasPage,
 });
 
-// URL do checkout
-const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
+// URL do checkout Mercado Pago
+const CHECKOUT_URL = "SEU_LINK_DO_MERCADO_PAGO_AQUI";
 
 function VendasPage() {
   return (
