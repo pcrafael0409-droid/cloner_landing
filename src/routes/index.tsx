@@ -14,11 +14,6 @@ import {
   Smartphone,
   Zap,
   Users,
-  Check,
-  X,
-  ChevronRight,
-  Activity,
-  Search,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { WhatsappLogo, InstagramLogo } from "@phosphor-icons/react";
@@ -31,11 +26,11 @@ const CHECKOUT_URL = "https://pay.cakto.com.br/zv5heyg_994345";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "CloneX — Teste de Compatibilidade & Monitoramento" },
+      { title: "Espião — Descubra se Ele Está te Traindo" },
       {
         name: "description",
         content:
-          "Descubra em 2 minutos se sua parceira apresenta sinais de conversas ocultas no WhatsApp e Instagram. 100% anônimo e seguro.",
+          "Monitore WhatsApp e Instagram de forma totalmente anônima. Descubra a verdade antes que seja tarde demais. 100% discreto e instantâneo.",
       },
     ],
   }),
@@ -43,7 +38,7 @@ export const Route = createFileRoute("/")({
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// COMPONENTE PRINCIPAL (GERENCIADOR DE ESTADOS DO FUNIL)
+// COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────────────────────────────────────
 
 function LandingPage() {
@@ -143,7 +138,7 @@ function QuizFunnel({
   const quizSteps = [
     {
       id: 1,
-      title: "Qual é a sua principal suspeita com a sua parceira?",
+      title: "Qual é a sua principal suspeita com o seu parceiro?",
       subtitle: "Selecione a situação que mais se aproxima da sua realidade atual.",
       options: [
         {
@@ -158,19 +153,19 @@ function QuizFunnel({
         },
         {
           icon: "⚡",
-          text: "O comportamento dela mudou e ela está mais fria ou distante comigo",
+          text: "O comportamento dele mudou e ele está mais fria ou distante comigo",
           badge: "Mudança Repentina",
         },
         {
           icon: "🚨",
-          text: "Tenho quase certeza que ela conversa com outro, só preciso de provas",
+          text: "Tenho quase certeza que ele conversa com outro, só preciso de provas",
           badge: "Urgente",
         },
       ],
     },
     {
       id: 2,
-      title: "Quais destas atitudes você notou nela recentemente?",
+      title: "Quais destas atitudes você notou nele recentemente?",
       subtitle: "Você pode selecionar mais de uma opção antes de avançar.",
       isMulti: true,
       options: [
@@ -573,7 +568,7 @@ function QuizFunnel({
                 Informe o perfil ou WhatsApp para consultar a disponibilidade:
               </h1>
               <p style={{ fontSize: "14px", color: "oklch(0.65 0.03 30)", lineHeight: 1.5 }}>
-                A consulta é <strong style={{ color: "white" }}>100% anônima e segura</strong>. A sua parceira JAMAIS saberá que esta busca foi realizada.
+                A consulta é <strong style={{ color: "white" }}>100% anônima e segura</strong>. A seu parceiro JAMAIS saberá que esta busca foi realizada.
               </p>
             </div>
 
@@ -588,7 +583,7 @@ function QuizFunnel({
                     marginBottom: "8px",
                   }}
                 >
-                  @ do Instagram ou número de WhatsApp dela:
+                  @ do Instagram ou número de WhatsApp dele:
                 </label>
                 <input
                   type="text"
@@ -831,222 +826,15 @@ function AnalyzingScreen({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// METRICS & DROP-OFF DASHBOARD MODAL
-// ─────────────────────────────────────────────────────────────────────────────
-
-function MetricsModal({ onClose }: { onClose: () => void }) {
-  const metrics = getFunnelMetrics() || {
-    quiz_step_1: 0,
-    quiz_step_2: 0,
-    quiz_step_3: 0,
-    quiz_step_4: 0,
-    analyzing: 0,
-    landing_page: 0,
-    checkout_click: 0,
-  };
-
-  const step1 = metrics.quiz_step_1 || 0;
-  const step2 = metrics.quiz_step_2 || 0;
-  const step3 = metrics.quiz_step_3 || 0;
-  const step4 = metrics.quiz_step_4 || 0;
-  const analyzing = metrics.analyzing || 0;
-  const landing = metrics.landing_page || 0;
-  const checkout = metrics.checkout_click || 0;
-
-  const calcDrop = (prev: number, curr: number) => {
-    if (prev === 0) return "0%";
-    const drop = ((prev - curr) / prev) * 100;
-    return `${Math.max(0, drop).toFixed(1)}% abandono`;
-  };
-
-  const calcConv = (prev: number, curr: number) => {
-    if (prev === 0) return "0%";
-    const conv = (curr / prev) * 100;
-    return `${conv.toFixed(1)}% avanço`;
-  };
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 99999,
-        background: "rgba(0,0,0,0.85)",
-        backdropFilter: "blur(12px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "20px",
-      }}
-    >
-      <div
-        style={{
-          background: "oklch(0.11 0.015 20)",
-          border: "1px solid oklch(0.57 0.26 22 / 0.4)",
-          borderRadius: "20px",
-          padding: "28px",
-          maxWidth: "540px",
-          width: "100%",
-          maxHeight: "90vh",
-          overflowY: "auto",
-          boxShadow: "0 0 60px oklch(0.57 0.26 22 / 0.3)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "20px",
-            borderBottom: "1px solid oklch(1 0 0 / 8%)",
-            paddingBottom: "14px",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <BarChart3 color="oklch(0.57 0.26 22)" size={24} />
-            <h3 style={{ fontFamily: "'Sora', system-ui, sans-serif", fontSize: "18px", fontWeight: 800 }}>
-              Métricas do Funil & Abandono
-            </h3>
-          </div>
-          <button
-            onClick={onClose}
-            style={{
-              background: "none",
-              border: "none",
-              color: "#aaa",
-              cursor: "pointer",
-              padding: "4px",
-            }}
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        <p style={{ fontSize: "13px", color: "oklch(0.65 0.03 30)", marginBottom: "20px", lineHeight: 1.5 }}>
-          Acompanhamento em tempo real de acessos, avanço por etapa do quiz e taxa de conversão final do checkout neste dispositivo/sessão:
-        </p>
-
-        {/* Funnel Flow Table */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
-          {[
-            { label: "1. Iniciaram Quiz (Pergunta 1)", count: step1, drop: "-" },
-            { label: "2. Responderam Pergunta 2", count: step2, drop: calcDrop(step1, step2), conv: calcConv(step1, step2) },
-            { label: "3. Responderam Pergunta 3", count: step3, drop: calcDrop(step2, step3), conv: calcConv(step2, step3) },
-            { label: "4. Preencheram Alvo (Etapa 4)", count: step4, drop: calcDrop(step3, step4), conv: calcConv(step3, step4) },
-            { label: "5. Tela de Varredura (Analyzing)", count: analyzing, drop: calcDrop(step4, analyzing), conv: calcConv(step4, analyzing) },
-            { label: "6. Chegaram na Landing Page", count: landing, drop: calcDrop(analyzing, landing), conv: calcConv(analyzing, landing) },
-            { label: "7. Clicaram no Checkout (Venda)", count: checkout, drop: calcDrop(landing, checkout), conv: calcConv(landing, checkout) },
-          ].map((item, idx) => (
-            <div
-              key={idx}
-              style={{
-                background: "oklch(0.14 0.015 20)",
-                border: "1px solid oklch(1 0 0 / 6%)",
-                borderRadius: "10px",
-                padding: "14px 16px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                fontSize: "13px",
-              }}
-            >
-              <div>
-                <div style={{ fontWeight: 700, color: "white" }}>{item.label}</div>
-                {item.conv && (
-                  <div style={{ fontSize: "11px", color: "#22c55e", marginTop: "2px" }}>
-                    ✓ {item.conv} do passo anterior
-                  </div>
-                )}
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: "16px", fontWeight: 800, color: "oklch(0.57 0.26 22)" }}>
-                  {item.count} acessos
-                </div>
-                {item.drop !== "-" && (
-                  <div style={{ fontSize: "11px", color: "oklch(0.65 0.25 22)" }}>
-                    📉 {item.drop}
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Global Funnel Conversion Rate */}
-        <div
-          style={{
-            background: "oklch(0.57 0.26 22 / 0.15)",
-            border: "1px solid oklch(0.57 0.26 22 / 0.4)",
-            borderRadius: "12px",
-            padding: "16px",
-            textAlign: "center",
-            marginBottom: "20px",
-          }}
-        >
-          <div style={{ fontSize: "12px", color: "oklch(0.70 0.03 30)", textTransform: "uppercase", fontWeight: 700 }}>
-            Taxa Geral de Conversão do Funil (Quiz ➔ Checkout)
-          </div>
-          <div style={{ fontSize: "28px", fontWeight: 800, color: "white", marginTop: "4px" }}>
-            {step1 > 0 ? ((checkout / step1) * 100).toFixed(1) : 0}%
-          </div>
-        </div>
-
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button
-            onClick={() => {
-              clearFunnelMetrics();
-              window.location.reload();
-            }}
-            style={{
-              flex: 1,
-              background: "oklch(0.16 0.02 20)",
-              border: "1px solid oklch(1 0 0 / 10%)",
-              color: "oklch(0.80 0.02 30)",
-              padding: "12px",
-              borderRadius: "10px",
-              fontSize: "13px",
-              fontWeight: 600,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "6px",
-            }}
-          >
-            <RefreshCw size={14} /> Zerar Métricas
-          </button>
-          <button
-            onClick={onClose}
-            style={{
-              flex: 1,
-              background: "oklch(0.57 0.26 22)",
-              color: "white",
-              padding: "12px",
-              borderRadius: "10px",
-              fontSize: "13px",
-              fontWeight: 700,
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Fechar Dashboard
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
 // URGENCY TICKER
 // ─────────────────────────────────────────────────────────────────────────────
 
 function UrgencyTicker() {
   const items = [
-    "🔥 VAGAS LIMITADAS — apenas 47 disponíveis hoje",
+    "💕 VAGAS LIMITADAS — apenas 47 disponíveis hoje",
     "⚠️ Oferta encerra em breve",
-    "✅ +47.000 homens já se libertaram da dúvida",
-    "🔒 100% anônimo — ela nunca saberá",
+    "✅ +47.000 mulheres já se libertaram da dúvida",
+    "🔒 100% anônimo — ele nunca saberá",
     "⚡ Acesso instantâneo após o pagamento",
   ];
   const doubled = [...items, ...items];
@@ -1180,7 +968,7 @@ function Hero() {
               marginBottom: "20px",
             }}
           >
-            Ela está te{" "}
+            Ele está te{" "}
             <span
               style={{
                 color: "oklch(0.57 0.26 22)",
@@ -1200,7 +988,7 @@ function Hero() {
               maxWidth: "520px",
             }}
           >
-            Descubra toda a verdade no WhatsApp e Instagram da sua parceira —{" "}
+            Descubra toda a verdade no WhatsApp e Instagram do seu parceiro —{" "}
             <strong style={{ color: "oklch(0.97 0.005 30)" }}>
               antes que seja tarde demais.
             </strong>
@@ -1237,7 +1025,7 @@ function Hero() {
                 "0 0 40px oklch(0.57 0.26 22 / 0.55), 0 20px 60px -20px oklch(0.57 0.26 22 / 0.4)";
             }}
           >
-            ⚡ Descobrir a Verdade — Acesso Imediato
+            💖 Descobrir a Verdade — Acesso Imediato
             <ArrowRight size={18} />
           </a>
 
@@ -1385,7 +1173,7 @@ function Hero() {
                   Amor ❤️
                 </div>
                 <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
-                  Pode vir, ele já dormiu...
+                  Pode vir, ela já dormiu...
                 </div>
               </div>
             </div>
@@ -1437,7 +1225,7 @@ function Hero() {
                   <span>2 min</span>
                 </div>
                 <div style={{ fontSize: "14px", fontWeight: 700, color: "white", marginBottom: "2px" }}>
-                  @pedro_alves
+                  @joice_silva
                 </div>
                 <div style={{ fontSize: "13px", color: "#ccc", lineHeight: 1.3 }}>
                   Você vem me ver hoje à noite? 🔥
@@ -1457,7 +1245,7 @@ function Hero() {
 
 function SocialProof() {
   const stats = [
-    { value: "+47.000", label: "homens libertos" },
+    { value: "+47.000", label: "mulheres libertas" },
     { value: "4.9★", label: "avaliação média" },
     { value: "100%", label: "anônimo e seguro" },
     { value: "<2 min", label: "para ter acesso" },
@@ -1476,7 +1264,6 @@ function SocialProof() {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
           gap: "16px",
-          marginBottom: "24px",
         }}
       >
         {stats.map((s) => (
@@ -1507,54 +1294,6 @@ function SocialProof() {
           </div>
         ))}
       </div>
-
-      {/* DADO ESTATÍSTICO DE IMPACTO */}
-      <div
-        style={{
-          background: "linear-gradient(135deg, oklch(0.57 0.26 22 / 0.15), oklch(0.12 0.02 20))",
-          border: "1px solid oklch(0.57 0.26 22 / 0.35)",
-          borderRadius: "16px",
-          padding: "24px clamp(16px, 4vw, 32px)",
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "20px",
-          boxShadow: "0 10px 30px -10px oklch(0.57 0.26 22 / 0.2)",
-          flexWrap: "wrap",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "'Sora', system-ui, sans-serif",
-            fontSize: "clamp(2rem, 5vw, 3rem)",
-            fontWeight: 800,
-            color: "oklch(0.57 0.26 22)",
-            textShadow: "0 0 25px oklch(0.57 0.26 22 / 0.5)",
-            lineHeight: 1,
-            flexShrink: 0,
-            margin: "0 auto",
-          }}
-        >
-          +70%
-        </div>
-        <div style={{ flex: "1 1 240px", textAlign: "left" }}>
-          <div
-            style={{
-              fontFamily: "'Sora', system-ui, sans-serif",
-              fontSize: "clamp(15px, 2.5vw, 17px)",
-              fontWeight: 700,
-              color: "oklch(0.97 0.005 30)",
-              marginBottom: "4px",
-              lineHeight: 1.3,
-            }}
-          >
-            Estudos revelam: mais de 70% das mulheres já conversaram em segredo com outro homem estando em um relacionamento.
-          </div>
-          <div style={{ fontSize: "13px", color: "oklch(0.65 0.03 30)", lineHeight: 1.4 }}>
-            A maioria esconde conversas no WhatsApp e DMs do Instagram. Não viva na dúvida.
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
@@ -1575,13 +1314,13 @@ function HowItWorks() {
       num: "2",
       icon: <Eye size={28} color="oklch(0.57 0.26 22)" />,
       title: "Informe o número ou @",
-      body: "Digite o número de WhatsApp ou o @ do Instagram da sua parceira. Não precisa de acesso ao celular dela.",
+      body: "Digite o número de WhatsApp ou o @ do Instagram do seu parceiro. Não precisa de acesso ao celular dele.",
     },
     {
       num: "3",
       icon: <MessageCircle size={28} color="oklch(0.57 0.26 22)" />,
       title: "Veja tudo em tempo real",
-      body: "Conversas, fotos, vídeos, histórico — tudo aparece no seu painel. Ela nunca saberá que você está vendo.",
+      body: "Conversas, fotos, vídeos, histórico — tudo aparece no seu painel. Ele nunca saberá que você está vendo.",
     },
   ];
 
@@ -1609,7 +1348,7 @@ function HowItWorks() {
           <span style={{ color: "oklch(0.57 0.26 22)" }}>Em segredo.</span>
         </h2>
         <p style={{ color: "oklch(0.60 0.03 30)", marginTop: "12px", fontSize: "15px" }}>
-          Você não precisa ser especialista e nem pegar no celular dela. Nós fazemos o trabalho difícil para você.
+          Você não precisa ser especialista e nem pegar no celular dele. Nós fazemos o trabalho difícil para você.
         </p>
       </div>
 
@@ -1712,12 +1451,12 @@ function WhatYouWillSee() {
     {
       emoji: "📍",
       title: "Histórico de Localização",
-      body: "Veja onde ela esteve nas últimas 24h no mapa.",
+      body: "Veja onde ele esteve nas últimas 24h no mapa.",
     },
     {
       emoji: "👤",
       title: "Seguidores Secretos do Instagram",
-      body: "Perfis que ela segue em sigilo e quem interage com ela.",
+      body: "Perfis que ele segue em sigilo e quem interage com ele.",
     },
     {
       emoji: "🔍",
@@ -1835,45 +1574,45 @@ function WhatYouWillSee() {
 function Testimonials() {
   const items = [
     {
-      name: "Ricardo M.",
+      name: "Ana R.",
       city: "São Paulo, SP",
       stars: 5,
-      text: "Eu não conseguia mais dormir com a minha intuição gritando. Em menos de 10 minutos vi tudo. A dor de ver foi grande, mas a libertação de não ser mais enganado foi maior. Valeu cada centavo.",
+      text: "Eu não conseguia mais dormir com a minha intuição gritando. Em menos de 10 minutos vi tudo. A dor de ver foi grande, mas a libertação de não ser mais enganada foi maior. Valeu cada centavo.",
       time: "há 2 dias",
     },
     {
-      name: "Lucas B.",
+      name: "Juliana M.",
       city: "Belo Horizonte, MG",
       stars: 5,
-      text: "Achei que eu estava ficando louco, ela sempre dizia que era paranoia da minha cabeça. Ver a verdade com meus próprios olhos me devolveu a paz e o controle da minha vida.",
+      text: "Achei que eu estava ficando louca, ele sempre dizia que era coisa da minha cabeça. Ver a verdade com meus próprios olhos me devolveu a paz e o controle da minha vida.",
       time: "há 5 dias",
     },
     {
-      name: "Fernando C.",
+      name: "Fernanda C.",
       city: "Curitiba, PR",
       stars: 5,
-      text: "Um amigo me indicou. Fiz o login, coloquei o número dela e em 2 minutos estava vendo as conversas dela. Simples demais. Recomendo para todo homem que tem dúvida.",
+      text: "Minha amiga me indicou. Fiz o login, coloquei o número dele e em 2 minutos estava vendo as conversas dele. Simples demais. Recomendo para todas que têm dúvida.",
       time: "há 1 semana",
     },
     {
-      name: "Paulo L.",
+      name: "Patricia L.",
       city: "Rio de Janeiro, RJ",
       stars: 5,
-      text: "Foram meses desconfiado achando que o problema era comigo. Descobri tudo. Doeu muito, mas pelo menos pude tomar uma decisão com base na verdade e seguir em frente.",
+      text: "Foram meses chorando escondida achando que o problema era eu. Descobri tudo. Doeu muito, mas pelo menos pude tomar uma decisão com base na verdade e seguir em frente.",
       time: "há 1 semana",
     },
     {
-      name: "Carlos S.",
+      name: "Camila S.",
       city: "Recife, PE",
       stars: 5,
-      text: "Funcionou perfeitamente no Instagram dela. Vi os DMs que ela achava que eram secretos. A interface é muito fácil, qualquer um consegue usar.",
+      text: "Funcionou perfeitamente no Instagram dele. Vi os DMs que ele achava que eram secretos. A interface é muito fácil, qualquer uma consegue usar.",
       time: "há 2 semanas",
     },
     {
-      name: "Rodrigo O.",
+      name: "Renata O.",
       city: "Porto Alegre, RS",
       stars: 5,
-      text: "Fiquei em paz depois de ver. Ela realmente não estava me traindo, só conversando sobre assuntos de trabalho. Mas eu precisava ter certeza. Serviço 100% anônimo, recomendo sem medo.",
+      text: "Fiquei em paz depois de ver. Ele realmente não estava traindo, só sendo estranho. Mas precisava saber. Serviço 100% anônimo, recomendo sem medo.",
       time: "há 2 semanas",
     },
   ];
@@ -1898,7 +1637,7 @@ function Testimonials() {
             letterSpacing: "-0.02em",
           }}
         >
-          Mais de 47 mil homens já{" "}
+          Mais de 47 mil mulheres já{" "}
           <span style={{ color: "oklch(0.57 0.26 22)" }}>recuperaram sua paz</span>
         </h2>
         <div style={{ display: "flex", justifyContent: "center", gap: "4px", marginTop: "16px" }}>
@@ -2277,7 +2016,7 @@ function Pricing() {
             onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
             onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
           >
-            ⚡ Quero a Minha Paz de Volta — R$19,90 <ArrowRight size={16} />
+            💖 Quero a Minha Paz de Volta — R$19,90 <ArrowRight size={16} />
           </a>
 
           <div style={{ textAlign: "center" }}>
@@ -2331,11 +2070,11 @@ function Pricing() {
 function FAQ() {
   const items = [
     {
-      q: "Ela vai saber que estou monitorando?",
-      a: "Não. O monitoramento é 100% invisível. Não aparece nenhuma notificação no celular dela, não muda nada no aplicativo dela e não deixa rastros. Ela nunca saberá.",
+      q: "Ele vai saber que estou monitorando?",
+      a: "Não. O monitoramento é 100% invisível. Não aparece nenhuma notificação no celular dele, não muda nada no aplicativo dele e não deixa rastros. Ele nunca saberá.",
     },
     {
-      q: "Preciso ter acesso ao celular dela para instalar algo?",
+      q: "Preciso ter acesso ao celular dele para instalar algo?",
       a: "Não! É exatamente por isso que o serviço é tão poderoso. Você só precisa informar o número de WhatsApp ou o @ do Instagram. Nada mais.",
     },
     {
@@ -2344,7 +2083,7 @@ function FAQ() {
     },
     {
       q: "E se não funcionar?",
-      a: "Temos garantia de 7 dias. Se por qualquer motivo você não ficar satisfeito, devolvemos 100% do seu dinheiro. Sem perguntas.",
+      a: "Temos garantia de 7 dias. Se por qualquer motivo você não ficar satisfeita, devolvemos 100% do seu dinheiro. Sem perguntas.",
     },
     {
       q: "Funciona com qualquer operadora?",
@@ -2352,7 +2091,7 @@ function FAQ() {
     },
     {
       q: "Meus dados estão seguros?",
-      a: "Sim. Todas as informações são criptografadas e você é o único com acesso ao painel. Não compartilhamos seus dados com ninguém.",
+      a: "Sim. Todas as informações são criptografadas e você é a única com acesso ao painel. Não compartilhamos seus dados com ninguém.",
     },
   ];
 
@@ -2499,7 +2238,7 @@ function FinalCTA() {
 
         <div style={{ position: "relative" }}>
           <div className="eye-neon" style={{ marginBottom: "16px", display: "inline-block" }}>
-            <Zap size={48} color="oklch(0.57 0.26 22)" fill="oklch(0.57 0.26 22 / 0.3)" />
+            <Heart size={48} color="oklch(0.57 0.26 22)" fill="oklch(0.57 0.26 22 / 0.3)" />
           </div>
 
           <h2
@@ -2524,7 +2263,7 @@ function FinalCTA() {
               margin: "0 auto 32px",
             }}
           >
-            Não fique mais acordado de madrugada com dúvida. Não viva mais na
+            Não fique mais acordada de madrugada com dúvida. Não viva mais na
             incerteza. Em menos de 2 minutos você terá as respostas que precisa —
             de forma segura, anônima e definitiva.
           </p>
@@ -2549,7 +2288,7 @@ function FinalCTA() {
               marginBottom: "16px",
             }}
           >
-            ⚡ Descobrir a Verdade Agora — R$19,90 <ArrowRight size={18} />
+            💖 Descobrir a Verdade Agora — R$19,90 <ArrowRight size={18} />
           </a>
 
           <div style={{ fontSize: "13px", color: "oklch(0.50 0.02 30)" }}>
@@ -2585,16 +2324,16 @@ function Footer() {
         }}
       >
         {/* Logo */}
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <Eye size={16} color="oklch(0.57 0.26 22)" />
           <span
             style={{
               fontFamily: "'Sora', system-ui, sans-serif",
-              fontWeight: 900,
-              fontSize: "20px",
-              letterSpacing: "-0.02em",
+              fontWeight: 700,
+              fontSize: "15px",
             }}
           >
-            Clone<span style={{ color: "oklch(0.57 0.26 22)" }}>X</span>
+            Espião
           </span>
         </div>
 
@@ -2612,7 +2351,7 @@ function Footer() {
         </div>
 
         <span style={{ fontSize: "11px", color: "oklch(0.40 0.02 30)" }}>
-          © {new Date().getFullYear()} CloneX. Todos os direitos reservados.
+          © {new Date().getFullYear()} Espião. Todos os direitos reservados.
         </span>
       </div>
 
@@ -2660,4 +2399,3 @@ function SectionBadge({ children }: { children: React.ReactNode }) {
     </span>
   );
 }
-
